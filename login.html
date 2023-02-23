@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        app.get('/', function (req, res) {
+            res.sendFile(__dirname + '/login.html');
+        });
+
+        app.post('/login', function (req, res) {
+            const email = req.body.email;
+            const password = req.body.password;
+
+            // validate email and password here
+            // ...
+
+            // set a cookie to remember the user's login
+            res.cookie('loggedIn', true);
+
+            // redirect to the home page
+            res.redirect('/home');
+        });
+
+    </script>
+    <script>
+        app.get('/home', function (req, res) {
+            const isLoggedIn = req.cookies.loggedIn;
+
+            if (isLoggedIn) {
+                res.send('Welcome to the home page!');
+            } else {
+                res.redirect('/');
+            }
+        });
+
+    </script>
+    <script>
+        app.listen(3000, function () {
+            console.log('Server is listening on port 3000.');
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>
+
+</html>
